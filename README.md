@@ -1,42 +1,69 @@
-# .
+# Gallery
 
-This template should help get you started developing with Vue 3 in Vite.
+A 2D browser gallery where visitors pick a character and walk through a space to explore paintings. Built with Vue 3, TypeScript, GSAP, and Vite.
 
-## Recommended IDE Setup
+## Features
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Character select** — choose from four characters (cat, dog, alien, rock) with an animated portal entrance
+- **2D gallery scene** — top-down map loaded from a CSV, with floor tiles, wall tiles, paintings, and floor items
+- **Movement** — WASD / arrow keys, click-to-move on desktop; drag-to-move on mobile
+- **Paintings** — click any painting to view it up close in a modal
+- **Wall actions** — About popup, external links, and an Exit button
+- **NPCs** — visitors wander the space using BFS pathfinding
+- **Thank you screen** — shown on exit, with the selected character walking in
 
-## Recommended Browser Setup
+## Built With
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Vue 3** — UI framework, component structure, and reactive state
+- **TypeScript** — type safety across all components and game logic
+- **GSAP** — all animations and the per-frame RAF game loop
+- **Vite** — dev server and production build
+- **Claude.ai** — AI assistant used throughout development
 
-## Type Support for `.vue` Imports in TS
+## Project structure
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+```
+src/
+  components/
+    CharacterSelect.vue   # opening screen
+    GalleryScene.vue      # main 2D game scene
+    PaintingModal.vue     # full-screen painting viewer
+    ThankYou.vue          # exit screen
+  App.vue
+  main.ts
+public/
+  map-data.csv            # grid layout — cell values control tile type and content
+  *.webp / *.GIF          # character sprites, visitor sprites, map tiles, paintings
+```
 
-## Customize configuration
+## Map cell values
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+| Value         | Tile                                 |
+| ------------- | ------------------------------------ |
+| `-1`          | empty (hidden)                       |
+| `0`           | wall left                            |
+| `1`           | wall center                          |
+| `2`           | wall right                           |
+| `3`           | floor (spawn point)                  |
+| `4`           | floor                                |
+| `4-N`         | floor + item overlay (`item-N.webp`) |
+| `100-N`       | wall left + painting N               |
+| `101-N`       | wall center + painting N             |
+| `102-N`       | wall right + painting N              |
+| `100-about`   | About action                         |
+| `101-links`   | Links action                         |
+| `102-exit`    | Exit action                          |
+| `101-welcome` | centred welcome text                 |
+| `101-intro`   | left-aligned instruction text        |
 
-## Project Setup
+## Setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
 ```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
+npm run dev       # development server
+npm run build     # type-check + production build
+npm run preview   # preview production build
 ```
