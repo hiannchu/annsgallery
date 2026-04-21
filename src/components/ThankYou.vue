@@ -109,7 +109,7 @@ function onBack() {
   color: #000;
   cursor: pointer;
   padding: 10px 0;
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid #000;
   transition: opacity 0.2s;
 }
 

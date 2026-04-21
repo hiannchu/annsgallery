@@ -809,7 +809,7 @@ onUnmounted(() => {
             <path d="M 50 2 L 99 28 L 99 118 L 1 118 L 1 28 Z" fill="#F6F6F6" stroke="#333" stroke-width="0.6" stroke-linejoin="miter" vector-effect="non-scaling-stroke" />
           </svg>
           <div class="about-inner">
-            <p class="about-text">Hi, I’m Ann, a front-end developer and designer. <br> This project was built with Vue and GSAP, with most of the code logic assisted by Claude.ai. <br> Visit my GitHub for details.</p>
+            <p class="about-text">Hi, I’m Ann, a front-end developer and designer. <br> This project was built with Vue and GSAP, with most of the code logic assisted by Claude.ai. <br> <a href="https://github.com/hiannchu/gallery" target="_blank" rel="noopener noreferrer">Visit my GitHub for details.</a></p>
           </div>
         </div>
       </div>
@@ -855,7 +855,7 @@ onUnmounted(() => {
   justify-content: center;
 }
 .floor-item img {
-  width: 200%;
+  width: 120%;
   height: auto;
   display: block;
   object-fit: contain;
@@ -962,6 +962,14 @@ onUnmounted(() => {
   font-size: 16px;
   line-height: 1.7;
   color: #000;
+}
+.about-text a {
+  color: #000;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+.about-text a:hover {
+  opacity: 0.5;
 }
 .modal-enter-active, .modal-leave-active { transition: opacity 0.2s ease; }
 .modal-enter-from,  .modal-leave-to      { opacity: 0; }
