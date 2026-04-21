@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const TILE_SIZE = 212
+const TILE_SIZE = 210
 const CHAR_W    = 172.8
 const CHAR_H    = 241.6
 const SPEED     = 8  // px per frame
@@ -702,7 +702,7 @@ onUnmounted(() => {
           top:    `${item.row * TILE_SIZE}px`,
           width:  `${TILE_SIZE}px`,
           height: `${TILE_SIZE}px`,
-          zIndex: item.row * TILE_SIZE + TILE_SIZE / 2,
+          zIndex: item.row * TILE_SIZE + TILE_SIZE * 0.6,
         }"
       >
         <img :src="item.src" :alt="item.id" draggable="false" />
