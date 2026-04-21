@@ -2,6 +2,8 @@
 
 A 2D browser gallery where visitors pick a character and walk through a space to explore paintings. Built with Vue 3, TypeScript, GSAP, and Vite.
 
+**Live Demo:** https://annsgallery.vercel.app
+
 ## Features
 
 - **Character select** — choose from four characters (cat, dog, alien, rock) with an animated portal entrance
