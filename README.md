@@ -18,6 +18,7 @@ A 2D browser gallery where visitors pick a character and walk through a space to
 - **TypeScript** — type safety across all components and game logic
 - **GSAP** — all animations and the per-frame RAF game loop
 - **Vite** — dev server and production build
+- **Tiled** — map editor used to design and export `map-data.csv`
 - **Claude.ai** — AI assistant used throughout development
 
 ## Project structure
