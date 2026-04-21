@@ -63,9 +63,9 @@ function onOverlayClick(e: Event) {
         aria-hidden="true"
       >
         <path
-          d="M 50 2 L 99 28 L 99 118 L 1 118 L 1 28 Z"
+          d="M 50 10 L 99 28 L 99 118 L 1 118 L 1 28 Z"
           fill="#F6F6F6"
-          stroke="#333"
+          stroke="#000"
           stroke-width="0.6"
           stroke-linejoin="miter"
           vector-effect="non-scaling-stroke"
@@ -104,7 +104,7 @@ function onOverlayClick(e: Event) {
 */
 .content {
   position: relative;
-  width: min(560px, 88vw);
+  width: min(72vh, 88vw);
   cursor: default;
 }
 
@@ -126,7 +126,7 @@ function onOverlayClick(e: Event) {
   position: relative;
   z-index: 1;
   /* padding-top clears the roof triangle (~25 % of height + small buffer) */
-  padding: 28% 1.6rem 1.8rem;
+  padding: 16vh 1.6rem 1.8rem;
 }
 
 
@@ -138,7 +138,7 @@ function onOverlayClick(e: Event) {
   width: 100%;
   height: auto;
   display: block;
-  max-height: 55vh;
+  max-height: 48vh;
   object-fit: contain;
 }
 </style>
