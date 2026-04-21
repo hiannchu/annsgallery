@@ -809,7 +809,7 @@ onUnmounted(() => {
             <path d="M 50 2 L 99 28 L 99 118 L 1 118 L 1 28 Z" fill="#F6F6F6" stroke="#333" stroke-width="0.6" stroke-linejoin="miter" vector-effect="non-scaling-stroke" />
           </svg>
           <div class="about-inner">
-            <p class="about-text">Hi, I’m Ann, a front-end developer and designer. <br> This project was built with Vue and GSAP, with most of the code logic assisted by Claude.ai. <br> <a href="https://github.com/hiannchu/gallery" target="_blank" rel="noopener noreferrer">Visit my GitHub for details.</a></p>
+            <p class="about-text">Hi, I’m Ann, a front-end developer and designer. <br> This project was built with Vue and GSAP, with most of the code logic assisted by Claude.ai. <br> <a href="https://github.com/hiannchu/annsgallery" target="_blank" rel="noopener noreferrer">Visit my GitHub for details.</a></p>
           </div>
         </div>
       </div>
