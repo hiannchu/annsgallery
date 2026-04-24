@@ -68,7 +68,7 @@ const floorItems = ref<FloorItem[]>([])
 const VISITOR_W = CHAR_W * 0.85   // ~147 px — slightly smaller than the player
 const VISITOR_H = CHAR_H * 0.85   // ~205 px
 
-const VISITOR_STYLES = [1, 2, 3] as const
+const VISITOR_STYLES = [1, 2, 3, 4] as const
 type VisitorStyle = typeof VISITOR_STYLES[number]
 
 type Visitor = {
