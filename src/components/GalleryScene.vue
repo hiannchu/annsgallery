@@ -38,13 +38,11 @@ type WallAction = { id: string; col: number; row: number; type: WallActionType }
 const wallActions = ref<WallAction[]>([])
 const showAboutModal = ref(false)
 
-const emit = defineEmits<{ exit: [] }>()
+const emit = defineEmits<{ exit: []; ready: [] }>()
 
 function onWallActionClick(type: WallActionType) {
   if (type === 'about') {
     showAboutModal.value = true
-  } else if (type === 'links') {
-    window.open('https://linktr.ee/ann.chu.creator', '_blank')
   } else if (type === 'exit') {
     emit('exit')
   }
@@ -624,6 +622,7 @@ function onPaintingClick(painting: Painting, e: Event) {
 // ─── Lifecycle ────────────────────────────────────────────────────────────────
 onMounted(async () => {
   await loadMap()
+  emit('ready')
   window.addEventListener('keydown', onKeyDown)
   window.addEventListener('keyup',   onKeyUp)
 
@@ -765,7 +764,7 @@ onUnmounted(() => {
           <span class="wall-action__label">About</span>
         </template>
         <template v-else-if="wa.type === 'links'">
-          <span class="wall-action__btn">Take Free</span>
+          <a class="wall-action__btn" href="https://linktr.ee/ann.chu.creator" target="_blank" rel="noopener">Take Free</a>
         </template>
         <template v-else-if="wa.type === 'exit'">
           <span class="wall-action__label">Exit</span>
@@ -912,6 +911,7 @@ onUnmounted(() => {
 .wall-action__btn {
   background: #000;
   color: #fff;
+  text-decoration: none;
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -998,6 +998,8 @@ onUnmounted(() => {
 .wall-text--left {
   justify-content: flex-start;
   text-align: left;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 /* ── Visitor ───────────────────────────────────────────── */
