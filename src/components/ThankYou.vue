@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import gsap from 'gsap'
+import { asset } from '@/lib/assets'
 
 const props = defineProps<{
   character: { id: string; static: string; walking: string }
@@ -52,7 +53,7 @@ function onBack() {
 
     <div ref="charEl" class="char-wrap">
       <img
-        :src="`/${character.walking}`"
+        :src="asset(character.walking)"
         :alt="character.id"
         draggable="false"
         class="char-img"

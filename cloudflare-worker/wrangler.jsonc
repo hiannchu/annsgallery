@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "annsgallery-proxy",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "vars": {
+    "PAGES_ORIGIN": "annsgallery.pages.dev"
+  },
+  "routes": [
+    {
+      "pattern": "annchu.me/annsgallery*",
+      "zone_name": "annchu.me"
+    }
+  ]
+}

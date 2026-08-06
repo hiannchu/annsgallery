@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import gsap from 'gsap'
+import { asset } from '@/lib/assets'
 
 const CHARACTERS = [
   { id: 'cat',   static: 'character-cat.webp',   walking: 'character-cat.GIF'   },
@@ -164,7 +165,7 @@ function confirm() {
           @click="select(idx)"
         >
           <img
-            :src="`/${selectedId === char.id ? char.walking : char.static}`"
+            :src="asset(selectedId === char.id ? char.walking : char.static)"
             :alt="char.id"
             draggable="false"
           />

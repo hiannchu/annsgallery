@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import gsap from 'gsap'
 import PaintingModal from './PaintingModal.vue'
+import { asset } from '@/lib/assets'
 
 const props = defineProps<{
   character: { id: string; static: string; walking: string }
@@ -37,6 +38,11 @@ type WallActionType = 'about' | 'links' | 'exit'
 type WallAction = { id: string; col: number; row: number; type: WallActionType }
 const wallActions = ref<WallAction[]>([])
 const showAboutModal = ref(false)
+
+// ─── Static wall textures ─────────────────────────────────────────────────────
+const mapWallLeftUrl   = asset('map-wall-left.webp')
+const mapWallCenterUrl = asset('map-wall-center.webp')
+const mapWallRightUrl  = asset('map-wall-right.webp')
 
 const emit = defineEmits<{ exit: []; ready: [] }>()
 
@@ -178,6 +184,17 @@ function tileCssClass(cell: string): Record<string, boolean> {
     'map-wall-center': b === 1 || b === 101,
     'map-wall-right':  b === 2 || b === 102,
   }
+}
+
+// Wall tiles use a fixed background image per type. Resolved via asset() (not
+// a static CSS url()) so the base path applies and lightningcss doesn't choke
+// on url(var(...)) during minification.
+function wallBackgroundImage(cell: string): string | undefined {
+  const b = cellBase(cell)
+  if (b === 0 || b === 100) return `url('${mapWallLeftUrl}')`
+  if (b === 1 || b === 101) return `url('${mapWallCenterUrl}')`
+  if (b === 2 || b === 102) return `url('${mapWallRightUrl}')`
+  return undefined
 }
 
 // ─── Visitor helpers ──────────────────────────────────────────────────────────
@@ -336,14 +353,14 @@ function tickVisitors(now: number) {
     if (el.dataset['visitorState'] !== state) {
       el.dataset['visitorState'] = state
       const img = el.querySelector('img') as HTMLImageElement | null
-      if (img) img.src = v.moving ? `/visitor-${v.style}.GIF` : `/visitor-${v.style}.webp`
+      if (img) img.src = v.moving ? asset(`visitor-${v.style}.GIF`) : asset(`visitor-${v.style}.webp`)
     }
   }
 }
 
 // ─── Map loading ──────────────────────────────────────────────────────────────
 async function loadMap() {
-  const res  = await fetch('/map-data.csv')
+  const res  = await fetch(asset('map-data.csv'))
   const text = await res.text()
 
   // Keep cells as strings — values like "100-1" must not be parsed to integers.
@@ -396,7 +413,7 @@ async function loadMap() {
       if (b === 4 && cell.indexOf('-', 1) !== -1) {
         // Floor item: '4-1' → floor tile + item-1.webp, un-walkable
         const itemNum = cell.split('-')[1]
-        floorItems.value.push({ id: cell, col: c, row: r, src: `/item-${itemNum}.webp` })
+        floorItems.value.push({ id: cell, col: c, row: r, src: asset(`item-${itemNum}.webp`) })
       } else if (b === 100 || b === 101 || b === 102) {
         if (WALL_ACTION_CELLS.has(cell)) {
           const type = cell.split('-')[1] as WallActionType
@@ -410,7 +427,7 @@ async function loadMap() {
               id:    cell,
               col:   c,
               row:   r,
-              src:   `/painting-${cell}.webp`,
+              src:   asset(`painting-${cell}.webp`),
               title: `Painting ${cell}`,
             })
           }
@@ -685,8 +702,8 @@ onUnmounted(() => {
             zIndex: ri,
             display: cellBase(cell) === -1 ? 'none' : 'block',
             backgroundImage: (floorVariants[ri]?.[ci] ?? 0) > 0
-              ? `url('/map-floor-${floorVariants[ri]?.[ci]}.webp')`
-              : undefined,
+              ? `url('${asset(`map-floor-${floorVariants[ri]?.[ci]}.webp`)}')`
+              : wallBackgroundImage(cell),
           }"
         />
       </template>
@@ -779,7 +796,7 @@ onUnmounted(() => {
         :ref="el => { visitorEls[vi] = el as HTMLElement }"
         :style="{ width: `${VISITOR_W}px`, height: `${VISITOR_H}px` }"
       >
-        <img :src="`/visitor-${style}.webp`" alt="Visitor" draggable="false" />
+        <img :src="asset(`visitor-${style}.webp`)" alt="Visitor" draggable="false" />
       </div>
 
       <!-- ── Character ── -->
@@ -788,7 +805,7 @@ onUnmounted(() => {
         class="character"
         :style="{ width: `${CHAR_W}px`, height: `${CHAR_H}px` }"
       >
-        <img :src="isMoving ? `/${props.character.walking}` : `/${props.character.static}`" alt="Character" draggable="false" />
+        <img :src="isMoving ? asset(props.character.walking) : asset(props.character.static)" alt="Character" draggable="false" />
       </div>
 
     </div>
@@ -840,10 +857,9 @@ onUnmounted(() => {
   background-repeat: repeat;
   background-size: cover;
 }
-.tile.map-floor-1    { background-image: url('/map-floor-1.webp'); }
-.tile.map-wall-left  { background-image: url('/map-wall-left.webp'); }
-.tile.map-wall-center{ background-image: url('/map-wall-center.webp'); }
-.tile.map-wall-right { background-image: url('/map-wall-right.webp'); }
+/* map-floor-1 / map-wall-* background images are now set inline via :style
+   (see wallBackgroundImage()) instead of static CSS, since url(v-bind(...))
+   breaks the production CSS minifier. */
 
 /* ── Floor item ────────────────────────────────────────── */
 .floor-item {
